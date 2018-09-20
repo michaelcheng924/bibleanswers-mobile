@@ -1,0 +1,30 @@
+{
+  "expo": {
+    "name": "Bible Answers",
+    "description": "Answers to questions about the Bible",
+    "slug": "bibleanswers",
+    "privacy": "public",
+    "sdkVersion": "27.0.0",
+    "platforms": ["ios", "android"],
+    "version": "1.0.1",
+    "orientation": "portrait",
+    "icon": "./app-icon-cross.png",
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "bundleIdentifier": "com.bibleanswers",
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSLocationAlwaysUsageDescription": "This app will not use this data. The data was only included because of the software used to build this app."
+      }
+    },
+    "android": {
+      "package": "com.bibleanswers",
+      "versionCode": 1
+    }
+  }
+}
