@@ -1,5 +1,12 @@
 import React from "react";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  Image,
+  Platform,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
+} from "react-native";
 
 const NavLogo = ({ navigation }) => {
   return (
@@ -20,7 +27,8 @@ const styles = StyleSheet.create({
   logoContainer: {
     alignItems: "center",
     display: "flex",
-    flexDirection: "row"
+    flexDirection: "row",
+    marginLeft: Platform.OS === "android" ? 10 : 0
   },
   logo: {
     height: 22,

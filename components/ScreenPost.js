@@ -26,11 +26,15 @@ export default class ScreenPost extends React.Component {
 
     return (
       <ScrollView style={styles.post}>
-        <Text style={styles.title}>{title}</Text>
-        <Text style={styles.subtitle}>{subtitle}</Text>
+        <View style={styles.padding}>
+          <Text style={styles.title}>{title}</Text>
+          <Text style={styles.subtitle}>{subtitle}</Text>
+        </View>
         <Image source={{ uri: imageUrl }} style={styles.image} />
-        <HTML html={content} />
-        <View style={{ height: 50 }} />
+        <View style={styles.padding}>
+          <HTML html={content} />
+          <View style={{ height: 50 }} />
+        </View>
       </ScrollView>
     );
   }
@@ -39,8 +43,11 @@ export default class ScreenPost extends React.Component {
 const styles = StyleSheet.create({
   post: {
     backgroundColor: "#fff",
-    flex: 1,
-    padding: 20
+    flex: 1
+  },
+  padding: {
+    padding: 20,
+    paddingBottom: 0
   },
   title: {
     fontSize: 36,
@@ -58,7 +65,6 @@ const styles = StyleSheet.create({
     width: Dimensions.get("window").width,
     height: 200,
     marginTop: 10,
-    position: "relative",
-    left: -20
+    position: "relative"
   }
 });

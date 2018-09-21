@@ -4,6 +4,10 @@ import HTML from "react-native-render-html";
 import { Dimensions, Text } from "react-native";
 
 export default class HTMLComponent extends React.Component {
+  onLinkPress = () => {
+    //
+  };
+
   render() {
     const { html } = this.props;
 
@@ -14,6 +18,7 @@ export default class HTMLComponent extends React.Component {
         tagsStyles={htmlStyles}
         listsPrefixesRenderers={prefixStyles}
         classesStyles={classStyles}
+        onLinkPress={this.onLinkPress}
       />
     );
   }

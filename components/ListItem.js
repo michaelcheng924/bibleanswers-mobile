@@ -55,10 +55,10 @@ const styles = StyleSheet.create({
   listInfoContainer: {
     flexShrink: 1
   },
-  listInfo: {
-    height: 68,
-    overflow: "hidden"
-  },
+  // listInfo: {
+  //   height: 68,
+  //   overflow: "hidden"
+  // },
   title: {
     color: "rgba(0,0,0,.84)",
     fontSize: 18,
@@ -79,6 +79,7 @@ const styles = StyleSheet.create({
   },
   listImage: {
     height: 80,
+    marginLeft: 20,
     width: 80
   }
 });
