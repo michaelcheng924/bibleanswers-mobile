@@ -48,7 +48,7 @@ export default class Tag extends React.Component {
             marginLeft: 4
           }}
         >
-          {this.props.tag}
+          {this.props.renderedTag || this.props.tag}
         </Text>
       </View>
     );

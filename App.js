@@ -2,8 +2,9 @@ import { createStackNavigator } from "react-navigation";
 
 import ScreenHome from "./components/ScreenHome";
 import ScreenPost from "./components/ScreenPost";
+import FilterModal from "./components/FilterModal";
 
-export default createStackNavigator({
+const MainStack = createStackNavigator({
   Home: {
     screen: ScreenHome
   },
@@ -11,3 +12,18 @@ export default createStackNavigator({
     screen: ScreenPost
   }
 });
+
+export default createStackNavigator(
+  {
+    Main: {
+      screen: MainStack
+    },
+    FilterModal: {
+      screen: FilterModal
+    }
+  },
+  {
+    mode: "modal",
+    headerMode: "none"
+  }
+);

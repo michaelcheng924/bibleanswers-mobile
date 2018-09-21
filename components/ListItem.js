@@ -5,6 +5,33 @@ import { partial } from "lodash";
 import Tag from "./Tag";
 
 export default class ListItem extends React.Component {
+  renderText(text) {
+    const { search = "" } = this.props;
+
+    const lowerSearch = search.toLowerCase();
+    const lowerText = text.toLowerCase();
+
+    const startIndex = lowerText.indexOf(lowerSearch);
+
+    if (startIndex === -1) {
+      return text;
+    }
+
+    const first = text.slice(0, startIndex);
+    const highlight = text.slice(startIndex, startIndex + search.length);
+    const last = text.slice(startIndex + search.length);
+
+    return (
+      <Text>
+        <Text>{first}</Text>
+        <Text style={{ color: "#039BE5", fontWeight: "bold" }}>
+          {highlight}
+        </Text>
+        <Text>{last}</Text>
+      </Text>
+    );
+  }
+
   render() {
     const {
       title,
@@ -21,12 +48,14 @@ export default class ListItem extends React.Component {
         <View style={styles.listItem}>
           <View style={styles.listInfoContainer}>
             <View style={styles.listInfo}>
-              <Text style={styles.title}>{title}</Text>
-              <Text style={styles.subtitle}>{subtitle}</Text>
+              <Text style={styles.title}>{this.renderText(title)}</Text>
+              <Text style={styles.subtitle}>{this.renderText(subtitle)}</Text>
             </View>
             <View style={styles.tags}>
               {tags.map(tag => {
-                return <Tag key={tag} tag={tag} />;
+                return (
+                  <Tag key={tag} renderedTag={this.renderText(tag)} tag={tag} />
+                );
               })}
             </View>
             <Text style={styles.date}>
@@ -55,10 +84,6 @@ const styles = StyleSheet.create({
   listInfoContainer: {
     flexShrink: 1
   },
-  // listInfo: {
-  //   height: 68,
-  //   overflow: "hidden"
-  // },
   title: {
     color: "rgba(0,0,0,.84)",
     fontSize: 18,

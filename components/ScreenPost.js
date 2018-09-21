@@ -3,6 +3,7 @@ import {
   Dimensions,
   Image,
   ScrollView,
+  StatusBar,
   StyleSheet,
   Text,
   View
@@ -26,6 +27,7 @@ export default class ScreenPost extends React.Component {
 
     return (
       <ScrollView style={styles.post}>
+        <StatusBar barStyle="dark-content" />
         <View style={styles.padding}>
           <Text style={styles.title}>{title}</Text>
           <Text style={styles.subtitle}>{subtitle}</Text>
