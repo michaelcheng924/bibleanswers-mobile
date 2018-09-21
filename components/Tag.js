@@ -32,6 +32,7 @@ export const TAG_MAPPING = {
 export default class Tag extends React.Component {
   render() {
     const { color, icon } = TAG_MAPPING[this.props.tag];
+    const { remove } = this.props;
 
     return (
       <View
@@ -50,6 +51,14 @@ export default class Tag extends React.Component {
         >
           {this.props.renderedTag || this.props.tag}
         </Text>
+        {remove ? (
+          <Icon
+            name="times"
+            size={16}
+            color={color}
+            style={{ marginLeft: 4 }}
+          />
+        ) : null}
       </View>
     );
   }

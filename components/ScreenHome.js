@@ -1,6 +1,6 @@
 import React from "react";
 import { StatusBar, StyleSheet, View } from "react-native";
-import { some } from "lodash";
+import { intersection, some } from "lodash";
 
 import NavLogo from "./NavLogo";
 import Search from "./Search";
@@ -36,7 +36,7 @@ export default class ScreenHome extends React.Component {
         })
       : posts;
 
-    answers = posts.filter(answer => {
+    answers = answers.filter(answer => {
       const lowerSearch = search.toLowerCase();
       const lowerTitle = answer.title.toLowerCase();
       const lowerSubtitle = answer.subtitle.toLowerCase();
@@ -64,6 +64,18 @@ export default class ScreenHome extends React.Component {
     this.setState({ search: text });
   };
 
+  onAdd = tag => {
+    this.setState({
+      tags: [...this.state.tags, tag]
+    });
+  };
+
+  onRemove = tagToRemove => {
+    this.setState({
+      tags: this.state.tags.filter(tag => tag !== tagToRemove)
+    });
+  };
+
   navigateToPost = post => {
     this.props.navigation.navigate("Post", post);
   };
@@ -88,6 +100,8 @@ export default class ScreenHome extends React.Component {
           filteredPosts={filteredPosts}
           navigation={navigation}
           onChangeText={this.onChangeText}
+          onAdd={this.onAdd}
+          onRemove={this.onRemove}
           posts={posts}
           search={search}
           tags={tags}

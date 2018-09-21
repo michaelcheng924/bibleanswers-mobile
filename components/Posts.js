@@ -29,9 +29,6 @@ export default class App extends React.Component {
 
     return (
       <View>
-        <Text style={styles.resultsCount}>{`Showing ${filteredPosts.length}/${
-          posts.length
-        } results`}</Text>
         {filteredPosts.length ? (
           <FlatList data={filteredPosts} renderItem={this.renderItem} />
         ) : (
@@ -52,11 +49,6 @@ const styles = StyleSheet.create({
     color: "rgba(0,0,0,.54)",
     fontSize: 24,
     marginTop: 40,
-    textAlign: "center"
-  },
-  resultsCount: {
-    color: "rgba(0,0,0,.54)",
-    fontSize: 14,
     textAlign: "center"
   },
   emptyText: {
