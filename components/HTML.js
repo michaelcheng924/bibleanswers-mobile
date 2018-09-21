@@ -86,6 +86,9 @@ const prefixStyles = {
 };
 
 const classStyles = {
+  first: {
+    marginTop: 8
+  },
   "after-list": {
     marginTop: 7
   }
