@@ -2,8 +2,6 @@ import React from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { partial } from "lodash";
 
-import Tag from "./Tag";
-
 export default class ListItem extends React.Component {
   renderText(text) {
     const { search = "" } = this.props;
@@ -33,15 +31,7 @@ export default class ListItem extends React.Component {
   }
 
   render() {
-    const {
-      title,
-      subtitle,
-      imageUrl,
-      tags,
-      added,
-      updated,
-      onSelect
-    } = this.props;
+    const { title, subtitle, imageUrl, added, updated, onSelect } = this.props;
 
     return (
       <TouchableOpacity onPress={partial(onSelect, this.props)}>
@@ -51,13 +41,6 @@ export default class ListItem extends React.Component {
               <Text style={styles.title}>{this.renderText(title)}</Text>
               <Text style={styles.subtitle}>{this.renderText(subtitle)}</Text>
             </View>
-            <View style={styles.tags}>
-              {tags.map(tag => {
-                return (
-                  <Tag key={tag} renderedTag={this.renderText(tag)} tag={tag} />
-                );
-              })}
-            </View>
             <Text style={styles.date}>
               {updated
                 ? `Updated: ${updated}`
@@ -66,7 +49,10 @@ export default class ListItem extends React.Component {
                   : null}
             </Text>
           </View>
-          <Image source={{ uri: imageUrl }} style={styles.listImage} />
+          <Image
+            source={{ uri: `http://bibleanswers.io${imageUrl}` }}
+            style={styles.listImage}
+          />
         </View>
       </TouchableOpacity>
     );

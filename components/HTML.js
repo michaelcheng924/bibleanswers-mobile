@@ -1,11 +1,15 @@
 import React from "react";
 import HTML from "react-native-render-html";
 
-import { Dimensions, Text } from "react-native";
+import { Dimensions, Linking, Text } from "react-native";
 
 export default class HTMLComponent extends React.Component {
-  onLinkPress = () => {
-    //
+  onLinkPress = (event, href) => {
+    if (href.indexOf("http") !== -1) {
+      Linking.openURL(href);
+    } else {
+      this.props.onNavigateToPost(href);
+    }
   };
 
   render() {
@@ -55,6 +59,7 @@ const htmlStyles = {
   ol: {
     fontSize: 18,
     lineHeight: 18 * 1.54,
+    marginBottom: 0,
     marginTop: 21
   },
   img: {
@@ -63,7 +68,8 @@ const htmlStyles = {
     marginTop: 21
   },
   a: {
-    color: "#689F38"
+    color: "#689F38",
+    textDecorationLine: "none"
   }
 };
 
@@ -91,5 +97,13 @@ const classStyles = {
   },
   "after-list": {
     marginTop: 7
+  },
+  reference: {
+    color: "rgba(0,0,0,.54)",
+    fontSize: 14,
+    textDecorationLine: "none"
+  },
+  "reference-arrow": {
+    opacity: 0
   }
 };

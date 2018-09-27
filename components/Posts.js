@@ -7,10 +7,24 @@ import {
   View
 } from "react-native";
 
+import Search from "./Search";
 import ListItem from "./ListItem";
 
 export default class App extends React.Component {
   renderItem = data => {
+    if (data.item.isSearch) {
+      const { filteredPosts, onChangeText, posts, search } = this.props;
+
+      return (
+        <Search
+          filteredPosts={filteredPosts}
+          onChangeText={onChangeText}
+          posts={posts}
+          search={search}
+        />
+      );
+    }
+
     return (
       <ListItem
         {...data.item}
@@ -30,7 +44,10 @@ export default class App extends React.Component {
     return (
       <View>
         {filteredPosts.length ? (
-          <FlatList data={filteredPosts} renderItem={this.renderItem} />
+          <FlatList
+            data={[{ key: "search", isSearch: true }, ...filteredPosts]}
+            renderItem={this.renderItem}
+          />
         ) : (
           <View>
             <Text style={styles.emptyText}>No results found</Text>

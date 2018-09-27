@@ -1,58 +1,19 @@
 import React from "react";
 import Icon from "react-native-vector-icons/FontAwesome";
-import {
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View
-} from "react-native";
-import { partial } from "lodash";
-
-import Tag from "./Tag";
+import { StyleSheet, Text, TextInput, View } from "react-native";
 
 export default class Search extends React.Component {
   state = {
     isFocused: false
   };
 
-  renderTags(tags, onPress, remove) {
-    return tags.map(tag => {
-      return (
-        <TouchableOpacity key={tag} onPress={partial(onPress, tag)}>
-          <View style={styles.tag}>
-            <Tag remove={remove} tag={tag} />
-          </View>
-        </TouchableOpacity>
-      );
-    });
-  }
-
   render() {
     const { isFocused } = this.state;
-    const { filteredPosts, onAdd, onRemove, posts, search, tags } = this.props;
+    const { filteredPosts, posts, search, tags } = this.props;
 
     return (
       <View>
         <View style={styles.searchContainer}>
-          <TouchableOpacity
-            onPress={() =>
-              this.props.navigation.navigate("FilterModal", {
-                filteredPosts,
-                onAdd,
-                onRemove,
-                posts,
-                tags
-              })
-            }
-          >
-            <Icon
-              name="filter"
-              size={18}
-              color="rgba(0,0,0,.54)"
-              style={{ marginRight: 6 }}
-            />
-          </TouchableOpacity>
           <Icon
             name="search"
             size={18}
@@ -71,7 +32,6 @@ export default class Search extends React.Component {
             value={search}
           />
         </View>
-        <View style={styles.tags}>{this.renderTags(tags, onRemove, true)}</View>
         <Text style={styles.resultsCount}>
           {`Showing ${filteredPosts.length}/${posts.length} results`}
         </Text>
@@ -86,15 +46,16 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     justifyContent: "center",
+    marginBottom: 5,
     marginLeft: "auto",
     marginRight: "auto",
+    marginTop: 10,
     width: 300
   },
   search: {
     borderBottomWidth: 1,
     borderColor: "rgba(0,0,0,.54)",
     fontSize: 16,
-    marginTop: 20,
     position: "relative",
     textAlign: "center",
     top: -5,

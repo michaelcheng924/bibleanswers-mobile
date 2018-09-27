@@ -8,6 +8,7 @@ import {
   Text,
   View
 } from "react-native";
+import { find } from "lodash";
 
 import HTML from "./HTML";
 import NavLogo from "./NavLogo";
@@ -17,24 +18,43 @@ export default class ScreenPost extends React.Component {
     headerTitle: <NavLogo navigation={navigation} />
   });
 
+  onNavigateToPost = url => {
+    const { navigation } = this.props;
+    const { posts } = navigation.state.params;
+
+    const post = find(posts, postData => postData.url === url);
+
+    if (post) {
+      this.scrollView.scrollTo({ y: 0 });
+
+      navigation.navigate("Post", {
+        post,
+        posts
+      });
+    }
+  };
+
   render() {
-    const {
-      title,
-      subtitle,
-      imageUrl,
-      content
-    } = this.props.navigation.state.params;
+    const { post } = this.props.navigation.state.params;
+
+    const { title, subtitle, imageUrl, content } = post;
 
     return (
-      <ScrollView style={styles.post}>
+      <ScrollView
+        ref={scrollView => (this.scrollView = scrollView)}
+        style={styles.post}
+      >
         <StatusBar barStyle="dark-content" />
         <View style={styles.padding}>
           <Text style={styles.title}>{title}</Text>
           <Text style={styles.subtitle}>{subtitle}</Text>
         </View>
-        <Image source={{ uri: imageUrl }} style={styles.image} />
+        <Image
+          source={{ uri: `http://bibleanswers.io${imageUrl}` }}
+          style={styles.image}
+        />
         <View style={styles.padding}>
-          <HTML html={content} />
+          <HTML html={content} onNavigateToPost={this.onNavigateToPost} />
           <View style={{ height: 50 }} />
         </View>
       </ScrollView>

@@ -1,6 +1,6 @@
 import React from "react";
-import { StatusBar, StyleSheet, View } from "react-native";
-import { intersection, some } from "lodash";
+import { StatusBar, StyleSheet, Text, View } from "react-native";
+import { some } from "lodash";
 
 import NavLogo from "./NavLogo";
 import Search from "./Search";
@@ -12,31 +12,23 @@ export default class ScreenHome extends React.Component {
   });
 
   state = {
+    loaded: false,
     posts: [],
-    search: "",
-    tags: []
+    search: ""
   };
 
-  componentWillMount() {
-    fetch("https://bibleanswers-backend.herokuapp.com/api/posts")
+  componentDidMount() {
+    fetch("http://bibleanswers.io/api/admin/posts")
       .then(r => r.json())
       .then(json => {
-        this.setState({
-          posts: json.posts
-        });
+        this.setState({ loaded: true, posts: json.posts });
       });
   }
 
   getFilteredPosts() {
-    const { posts, search, tags } = this.state;
+    const { posts, search } = this.state;
 
-    let answers = tags.length
-      ? posts.filter(answer => {
-          return intersection(answer.tags, tags).length;
-        })
-      : posts;
-
-    answers = answers.filter(answer => {
+    let answers = posts.filter(answer => {
       const lowerSearch = search.toLowerCase();
       const lowerTitle = answer.title.toLowerCase();
       const lowerSubtitle = answer.subtitle.toLowerCase();
@@ -52,7 +44,7 @@ export default class ScreenHome extends React.Component {
     });
 
     answers.forEach(answer => {
-      answer.key = answer.uid;
+      answer.key = answer.url;
     });
 
     return answers.sort((a, b) => {
@@ -64,20 +56,11 @@ export default class ScreenHome extends React.Component {
     this.setState({ search: text });
   };
 
-  onAdd = tag => {
-    this.setState({
-      tags: [...this.state.tags, tag]
-    });
-  };
-
-  onRemove = tagToRemove => {
-    this.setState({
-      tags: this.state.tags.filter(tag => tag !== tagToRemove)
-    });
-  };
-
   navigateToPost = post => {
-    this.props.navigation.navigate("Post", post);
+    this.props.navigation.navigate("Post", {
+      post: post,
+      posts: this.state.posts
+    });
   };
 
   clearSearch = () => {
@@ -88,38 +71,37 @@ export default class ScreenHome extends React.Component {
   };
 
   render() {
-    const { posts, search, tags } = this.state;
-    const { navigation } = this.props;
+    const { loaded, posts, search } = this.state;
 
     const filteredPosts = this.getFilteredPosts();
 
-    return (
+    return loaded ? (
       <View style={styles.home}>
         <StatusBar barStyle="dark-content" />
-        <Search
-          filteredPosts={filteredPosts}
-          navigation={navigation}
-          onChangeText={this.onChangeText}
-          onAdd={this.onAdd}
-          onRemove={this.onRemove}
-          posts={posts}
-          search={search}
-          tags={tags}
-        />
         <Posts
           clearSearch={this.clearSearch}
           filteredPosts={filteredPosts}
           navigateToPost={this.navigateToPost}
+          onChangeText={this.onChangeText}
           posts={posts}
           search={search}
-          tags={tags}
         />
+      </View>
+    ) : (
+      <View style={styles.home}>
+        <Text style={styles.loading}>Loading...</Text>
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  loading: {
+    color: "rgba(0,0,0,.54)",
+    fontSize: 18,
+    marginTop: 30,
+    textAlign: "center"
+  },
   home: {
     backgroundColor: "#fff",
     flex: 1
