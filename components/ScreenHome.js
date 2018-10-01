@@ -18,7 +18,7 @@ export default class ScreenHome extends React.Component {
   };
 
   componentDidMount() {
-    fetch("http://bibleanswers.io/api/admin/posts")
+    fetch("http://bibleanswers.io/api/posts")
       .then(r => r.json())
       .then(json => {
         this.setState({ loaded: true, posts: json.posts });
