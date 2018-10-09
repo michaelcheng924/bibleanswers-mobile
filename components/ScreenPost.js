@@ -49,10 +49,7 @@ export default class ScreenPost extends React.Component {
           <Text style={styles.title}>{title}</Text>
           <Text style={styles.subtitle}>{subtitle}</Text>
         </View>
-        <Image
-          source={{ uri: `http://bibleanswers.io${imageUrl}` }}
-          style={styles.image}
-        />
+        <Image source={{ uri: imageUrl }} style={styles.image} />
         <View style={styles.padding}>
           <HTML html={content} onNavigateToPost={this.onNavigateToPost} />
           <View style={{ height: 50 }} />

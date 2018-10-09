@@ -49,10 +49,7 @@ export default class ListItem extends React.Component {
                   : null}
             </Text>
           </View>
-          <Image
-            source={{ uri: `http://bibleanswers.io${imageUrl}` }}
-            style={styles.listImage}
-          />
+          <Image source={{ uri: imageUrl }} style={styles.listImage} />
         </View>
       </TouchableOpacity>
     );
